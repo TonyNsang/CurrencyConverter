@@ -1,13 +1,20 @@
 package com.college.converter;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
 import android.util.Log;
+
+import android.view.LayoutInflater;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.college.converter.databinding.ActivityMainBinding;
 
 /*
     TODOs:
@@ -24,14 +31,25 @@ import android.widget.TextView;
 */
 
 public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding variableBinding;
+
+
     static private final Float CONVERSION_RATE = 0.80F;
     static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Log.i(TAG, "onCreate: Activity started.");
-        Button buttonConvert = findViewById(R.id.convertButton);
+        
+
+        variableBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(variableBinding.getRoot());
+
+        Button buttonConvert = variableBinding.convertButton;
+
 
         buttonConvert.setOnClickListener( view ->  {
             convertCurrency(view);
@@ -43,19 +61,21 @@ public class MainActivity extends AppCompatActivity {
     public void convertCurrency(View view) {
         Log.i(TAG, "convertCurrency: Starting currency conversion process.");
 
-        EditText inputView = findViewById(R.id.entryId);
+        EditText inputView = variableBinding.entryId;
 
         String inputAmount = inputView.getText().toString();
 
-        TextView resultView = findViewById(R.id.resultId);
+        TextView resultView = variableBinding.resultId;
 
         if (!inputAmount.isEmpty()) {
             Float inputAmountDecimal = Float.valueOf(inputAmount);
 
             Float resultFloat = inputAmountDecimal * CONVERSION_RATE;
-
-            resultView.setText( resultFloat + " Euros" );
+            //resultView.setText(resultFloat + "Euros ";
+            resultView.setText( resultFloat + getString(R.string.euros_result) );
         }
         Log.i(TAG, "convertCurrency: Currency conversion process completed.");
     }
+
+
 }
