@@ -4,7 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import android.util.Log;
+
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,22 +36,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     static private final Float CONVERSION_RATE = 0.80F;
+    static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.i(TAG, "onCreate: Activity started.");
+        
 
         variableBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(variableBinding.getRoot());
 
         Button buttonConvert = variableBinding.convertButton;
 
+
         buttonConvert.setOnClickListener( view ->  {
             convertCurrency(view);
         } );
+        Log.i(TAG, "onCreate: Activity  ready for user interaction.");
+
     }
 
     public void convertCurrency(View view) {
+        Log.i(TAG, "convertCurrency: Starting currency conversion process.");
 
         EditText inputView = variableBinding.entryId;
 
@@ -62,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             //resultView.setText(resultFloat + "Euros ";
             resultView.setText( resultFloat + getString(R.string.euros_result) );
         }
+        Log.i(TAG, "convertCurrency: Currency conversion process completed.");
     }
 
 
